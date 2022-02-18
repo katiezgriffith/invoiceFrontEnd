@@ -14,7 +14,7 @@
               Invoice Price: <span>${{ invoice.total_price }}</span>
             </div>
 
-            ...
+            
             <hr />
             <h3>Transactions </h3>
             <div class="form-group">
@@ -47,10 +47,10 @@
               </div>
 
             </div>
-                    ...
+                    
 
           <form @submit.prevent="onSubmit">
-            ...
+            
 
             <div class="col-md-12">
               <table class="table">
@@ -149,7 +149,7 @@ export default {
       });
       this.invoice.total_price = total;
     },
-onSubmit() {
+    onSubmit() {
       const formData = new FormData();
 
       this.transactions.forEach(element => {
@@ -162,7 +162,7 @@ onSubmit() {
       this.loading = "Creating Invoice, please wait ...";
 
       // Post to server
-      axios.post("http://localhost:3128/invoice", formData).then(res => {
+      axios.post("http://localhost:4000/invoice", formData).then(res => {
         // Post a status message
         this.loading = "";
 

@@ -30,7 +30,6 @@
     </div>
   </div>
 </template>
-
 ...
 
 <script>
@@ -46,7 +45,7 @@ export default {
   },
   mounted() {
     axios
-      .get(`http://localhost:3128/invoice/user/${this.user.id}`)
+      .get(`http://localhost:4000/invoice/user/${this.user.id}`)
       .then(res => {
         if (res.data.status == true) {
           this.invoices = res.data.invoices;
@@ -55,4 +54,5 @@ export default {
   }
 };
 </script>
+
 

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    ...
+    
 
     <div class="tab-content p-3">
       <div id="login" class="tab-pane fade show active" role="tabpanel" aria-labelledby="login-tab">
@@ -77,9 +77,8 @@ import axios from "axios"
 import Header from "./Header"
 
 export default {
-  name: "SignUp",
+  name: "SignUp-item",
   components: {
-    
     // eslint-disable-next-line vue/no-unused-components
     Header
   },
@@ -102,7 +101,7 @@ export default {
       // checks to ensure passwords match
       if (this.model.password != this.model.c_password) {
         return false;
-      }
+     }
       return true;
     },
 
@@ -139,7 +138,7 @@ export default {
     },
 
 
-  methods: {
+  
 
 
     login() {
@@ -150,7 +149,7 @@ export default {
       this.loading = "Logging In";
 
       // Post to server
-      axios.post("http://localhost:3128/login", formData).then(res => {
+      axios.post("http://localhost:4000/login", formData).then(res => {
         // Post a status message
         this.loading = "";
     
@@ -173,6 +172,6 @@ export default {
 
 
 
-  }
+  
 
 </script>
