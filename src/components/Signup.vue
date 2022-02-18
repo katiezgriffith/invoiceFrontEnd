@@ -97,81 +97,62 @@ export default {
   },
   methods: {
     
-    validate() {
-      // checks to ensure passwords match
-      if (this.model.password != this.model.c_password) {
-        return false;
-     }
-      return true;
-    },
-
-    register() {
-      const formData = new FormData();
-      let valid = this.validate();
-
-      if (valid) {
-        formData.append("name", this.model.name);
-        formData.append("email", this.model.email);
-        formData.append("company_name", this.model.company_name);
-        formData.append("password", this.model.password);
-
-        this.loading = "Registering you, please wait";
-
-        // Post to server
-        axios.post("http://localhost:4000/register", formData).then(res => {
-          // Post a status message
-          this.loading = "";
-
-          if (res.data.status == true) {
-            // now send the user to the next route
-            this.$router.push({
-              name: "Dashboard",
-              params: { user: res.data.user }
+     
+        register(){
+          const formData = new FormData();
+          let valid = this.validate();
+          if(valid){
+            // prepare formData
+           
+            // Post to server
+            axios.post("http://localhost:4000/register", formData)
+            .then(res => {
+              // Post a status message
+              this.loading = "";
+              if (res.data.status == true) {
+                // store the user token and user data in localStorage
+                localStorage.setItem('token', res.data.token);
+                localStorage.setItem('user', JSON.stringify(res.data.user));
+                // now send the user to the next route
+                this.$router.push({
+                  name: "Dashboard",
+                });
+              } else {
+                this.status = res.data.message;
+              }
             });
-          } else {
-            this.status = res.data.message;
           }
-        });
-      } else {
-        alert("Passwords do not match");
-      }
-    },
-
+          else{
+            alert("Passwords do not match");
+          }
+        },
 
   
-
-
-    login() {
-      const formData = new FormData();
-
-      formData.append("email", this.model.email);
-      formData.append("password", this.model.password);
-      this.loading = "Logging In";
-
-      // Post to server
-      axios.post("http://localhost:4000/login", formData).then(res => {
-        // Post a status message
-        this.loading = "";
-    
-        if (res.data.status == true) {
-          // now send the user to the next route
-          this.$router.push({
-            name: "Dashboard",
-            params: { user: res.data.user }
+        login() {
+          const formData = new FormData();
+          formData.append("email", this.model.email);
+          formData.append("password", this.model.password);
+          this.loading = "Signing in";
+          // Post to server
+          axios.post("http://localhost:4000/login", formData).then(res => {
+            // Post a status message
+            console.log(res);
+            this.loading = "";
+            if (res.data.status == true) {
+              // store the data in localStorage
+              localStorage.setItem("token", res.data.token);
+              localStorage.setItem("user", JSON.stringify(res.data.user));
+              // now send the user to the next route
+              this.$router.push({
+                name: "Dashboard"
+              });
+            } else {
+              this.status = res.data.message;
+            }
           });
-        } else {
-          this.status = res.data.message;
-        }
-      });
-    }
-  }
 
+}
 
-
-  }
-
-
-
-  
+  }}
 
 </script>

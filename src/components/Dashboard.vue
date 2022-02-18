@@ -10,27 +10,31 @@
   </div>
 </template>
 
-...
+
 
 <script>
-import Header from "./Header";
-import CreateInvoice from "./CreateInvoice";
-import ViewInvoices from "./ViewInvoices";
 
-export default {
-  name: "Dashboard-item",
-  components: {
-    Header,
-    CreateInvoice,
-    ViewInvoices,
-  },
-  data() {
-    return {
-      isactive: 'create',
-      title: "Invoicing App",
-      user : (this.$route.params.user) ? this.$route.params.user : null
-    };
-  }
-};
+   
+    import Header from "./Header";
+    import CreateInvoice from "./CreateInvoice";
+    import ViewInvoices from "./ViewInvoices";
+    export default {
+      name: "Dashboard-item",
+      components: {
+        Header,
+        CreateInvoice,
+        ViewInvoices,
+      },
+      data() {
+        return {
+          isactive: 'create',
+          title: "Invoicing App",
+          user : null,
+        };
+      },
+      mounted(){
+        this.user = JSON.parse(localStorage.getItem("user"));
+      }
+    }
 </script>
 

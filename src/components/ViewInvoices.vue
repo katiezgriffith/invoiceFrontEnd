@@ -32,27 +32,34 @@
 </template>
 ...
 
-<script>
-import axios from "axios";
-
-export default {
-  name: "ViewInvoices",
-  data() {
-    return {
-      invoices: [],
-      user: this.$route.params.user
+    <script>
+    import axios from "axios";
+    export default {
+      name: "ViewInvoices",
+      components: {},
+      data() {
+        return {
+          invoices: [],
+          user: '',
+        };
+      },
+      mounted() {
+        this.user = JSON.parse(localStorage.getItem('user'));
+        axios
+          .get(`http://localhost:4000/invoice/user/${this.user.id}`,
+            {
+              headers: {"x-access-token": localStorage.getItem("token")}
+            }
+          )
+          .then(res => {
+            if (res.data.status == true) {
+              console.log(res.data.invoices);
+              this.invoices = res.data.invoices;
+            }
+          });
+      }
     };
-  },
-  mounted() {
-    axios
-      .get(`http://localhost:4000/invoice/user/${this.user.id}`)
-      .then(res => {
-        if (res.data.status == true) {
-          this.invoices = res.data.invoices;
-        }
-      });
-  }
-};
-</script>
+    </script>
+
 
 
